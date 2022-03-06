@@ -1,13 +1,15 @@
 package service;
 
 import exception.InvalidName;
+import exception.InvalidNationalId;
 
 import java.util.Scanner;
 
 public class Utility {
-    private Scanner input = new Scanner(System.in);
-    private String fullName;
+    private final Scanner input = new Scanner(System.in);
+    private String fullName,nationalId;
     private final InvalidName invalidName = new InvalidName();
+    private final InvalidNationalId invalidNationalId = new InvalidNationalId();
 
     public String setFullName(){
         while(true){
@@ -22,6 +24,21 @@ public class Utility {
         }
         return fullName;
     }
+
+    public String setNationalId(){
+        while(true){
+            System.out.print("Enter National Id(just number):");
+            try {
+                nationalId = input.nextLine();
+                nationalIdChecker(nationalId);
+                break;
+            }catch (InvalidNationalId except){
+                System.out.println(except.getMessage());
+            }
+        }
+        return nationalId;
+    }
+
 
 
 
@@ -45,6 +62,17 @@ public class Utility {
         ) {
             if(!Character.isAlphabetic(ch))
                 throw new InvalidName("name can't have Sign(!,@,#,%,...)");
+        }
+    }
+
+    public void nationalIdChecker(String nationalId){
+        if(nationalId.length() > 10 )
+            throw new InvalidNationalId("national Id can't more than ten number!");
+        if(nationalId.equals(""))
+            throw new InvalidNationalId("dont enter space!");
+        for (Character ch:nationalId.toCharArray()) {
+            if(!Character.isDigit(ch))
+                throw new InvalidNationalId("national Id should be just number!");
         }
     }
 
