@@ -20,7 +20,7 @@ public class UserAccount {
     @Column(nullable = false)
     private String fullName;
 
-    @Column(length = 10,nullable = false)
+    @Column(length = 10,nullable = false,unique = true)
     private String nationalId;
 
     @Column(nullable = false)
