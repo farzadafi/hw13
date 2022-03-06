@@ -2,14 +2,16 @@ package service;
 
 import exception.InvalidName;
 import exception.InvalidNationalId;
+import exception.InvalidPassword;
 
 import java.util.Scanner;
 
 public class Utility {
     private final Scanner input = new Scanner(System.in);
-    private String fullName,nationalId;
+    private String fullName,nationalId,password;
     private final InvalidName invalidName = new InvalidName();
     private final InvalidNationalId invalidNationalId = new InvalidNationalId();
+    private final InvalidPassword invalidPassword = new InvalidPassword();
 
     public String setFullName(){
         while(true){
@@ -38,6 +40,21 @@ public class Utility {
         }
         return nationalId;
     }
+
+    public String setPassword(){
+        while(true) {
+            System.out.print("Enter your password:");
+            try {
+                password = input.nextLine();
+                passwordCheck(password);
+                break;
+            } catch (InvalidPassword except) {
+                System.out.println(except.getMessage());
+            }
+        }
+        return password;
+    }
+
 
 
 
@@ -75,6 +92,33 @@ public class Utility {
                 throw new InvalidNationalId("national Id should be just number!");
         }
     }
+
+    public void passwordCheck(String password){
+        if(password.length() < 3 )
+            throw new InvalidPassword("password should be more than 2 ");
+        char[] passwordArray = password.toCharArray();
+        char[] signArray =  new char[] {'!','@','#','$','%','^','&','*','(',')','-','+','=','.',',','>','<','?','/','|',':',';'};
+        int space = 0,lowerCase = 0,upperCase = 0,sign = 0,digit = 0;
+        for(int i=0;i<passwordArray.length;i++)
+            if(Character.isSpaceChar(passwordArray[i]))
+                ++space;
+        for(int i = 0;i<passwordArray.length;i++)
+            if(Character.isUpperCase(passwordArray[i]))
+                ++upperCase;
+        for(int i = 0;i<passwordArray.length;i++)
+            if(Character.isLowerCase(passwordArray[i]))
+                ++lowerCase;
+        for(int i = 0;i<passwordArray.length;i++)
+            if(Character.isDigit(passwordArray[i]))
+                ++digit;
+        for(int i=0;i<signArray.length;i++)
+            for(int j=0;j<passwordArray.length;j++)
+                if(signArray[i] == passwordArray[j])
+                    ++sign;
+        if( (space == 0) || (lowerCase == 0) || (upperCase == 0) || (sign == 0) || (digit == 0) )
+            throw new InvalidPassword("password should have space+lowerCase+upperCase+sign+digit!");
+    }
+
 
 
 
