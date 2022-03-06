@@ -3,19 +3,16 @@ package repository;
 import entity.Student;
 import service.Service;
 
-public class StudentRepository implements Service<Student> {
-    @Override
-    public void add() {
+import java.util.List;
 
+public class StudentRepository implements Repository<Student> {
+    @Override
+    public Student findById(int id) {
+        return null;
     }
 
     @Override
-    public void delete(Student student) {
-
-    }
-
-    @Override
-    public void update(Student student) {
-
+    public List<Student> findAll() {
+        return null;
     }
 }

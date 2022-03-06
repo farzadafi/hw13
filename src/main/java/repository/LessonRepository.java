@@ -3,19 +3,16 @@ package repository;
 import entity.Lesson;
 import service.Service;
 
-public class LessonRepository implements Service<Lesson> {
-    @Override
-    public void add() {
+import java.util.List;
 
+public class LessonRepository implements Repository<Lesson> {
+    @Override
+    public Lesson findById(int id) {
+        return null;
     }
 
     @Override
-    public void delete(Lesson lesson) {
-
-    }
-
-    @Override
-    public void update(Lesson lesson) {
-
+    public List<Lesson> findAll() {
+        return null;
     }
 }
