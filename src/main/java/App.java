@@ -2,21 +2,18 @@ public class App {
     public static void main(String[] args) {
         Menu menu = new Menu();
         while (true) {
-            menu.mainMenu();
-            switch (menu.publicLogin()) {
-                case 0:
-                    break;
-
+            switch (menu.mainMenu()) {
                 case 1:
-                    menu.clerkMenu();
+                    menu.publicLogin();
                     break;
 
                 case 2:
-                    menu.studentMenu();
-                    break;
+                    System.out.println("Have a nice day!");
+                    System.exit(0);
 
                 case 3:
-                    menu.professorMenu();
+                    System.out.println("You enter a wrong number");
+                    break;
             }
         }
     }
