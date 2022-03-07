@@ -1,4 +1,4 @@
-package exception;
+package service.exception;
 
 public class InvalidName extends RuntimeException{
     public InvalidName() {

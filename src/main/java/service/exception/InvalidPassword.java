@@ -1,4 +1,4 @@
-package exception;
+package service.exception;
 
 public class InvalidPassword extends RuntimeException {
     public InvalidPassword() {
