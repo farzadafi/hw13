@@ -3,7 +3,7 @@ package entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,8 +16,13 @@ public class Lesson {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToMany(mappedBy = "lessons")
-    private List<Student> students;
+    @ManyToMany()
+    @JoinTable(
+            name = "Student_Lessons",
+            joinColumns = @JoinColumn(name = "lesson_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private Set<Student> students;
 
     @Column(nullable = false)
     private Integer idOfferLesson;
