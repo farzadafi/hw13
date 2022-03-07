@@ -222,25 +222,32 @@ public class Menu {
     }
 
     public void professorMenu(UserAccount user){
-        System.out.println("Professor Menu");
+        boolean falseWhile = true;
+        while(falseWhile)
+        {
+            System.out.println("\n****** Hi! " + user.getFullName() + " ******");
+            System.out.println("1-Register grad's Student.");
+            System.out.println("2-view salary bill.");
+            System.out.println("3-Exit.");
+            System.out.print("please select a number:");
+            command = input.nextInt();
+            input.nextLine();
+            switch (command)
+            {
+                case 1:
+                    break;
+
+                case 2:
+                    break;
+
+                case 3:
+                    System.out.println("Good luck!");
+                    falseWhile = false;
+                    break;
+
+                default:
+                    System.out.println("you enter a wrong number");
+            }
+        }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
