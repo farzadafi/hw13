@@ -1,18 +1,18 @@
 package service;
 
-public class OfferLessonService implements Service<OfferLessonService> {
+public class OfferLessonService implements Service {
     @Override
     public void add() {
 
     }
 
     @Override
-    public void delete(OfferLessonService offerLessonService) {
+    public void delete() {
 
     }
 
     @Override
-    public void update(OfferLessonService offerLessonService) {
+    public void update() {
 
     }
 }

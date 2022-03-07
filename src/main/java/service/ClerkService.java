@@ -2,19 +2,19 @@ package service;
 
 import entity.Clerk;
 
-public class ClerkService implements Service<Clerk>{
+public class ClerkService implements Service{
     @Override
     public void add() {
 
     }
 
     @Override
-    public void delete(Clerk clerk) {
+    public void delete() {
 
     }
 
     @Override
-    public void update(Clerk clerk) {
+    public void update() {
 
     }
 

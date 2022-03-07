@@ -2,19 +2,19 @@ package service;
 
 import entity.Professor;
 
-public class ProfessorService implements Service<Professor> {
+public class ProfessorService implements Service {
     @Override
     public void add() {
 
     }
 
     @Override
-    public void delete(Professor professor) {
+    public void delete() {
 
     }
 
     @Override
-    public void update(Professor professor) {
+    public void update() {
 
     }
 }

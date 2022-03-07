@@ -1,11 +1,12 @@
 package service;
 
-public interface Service<K> {
+public interface Service {
+    //because clerk do every Thing,no argument passing!
 
     void add();
 
-    void delete(K k);
+    void delete();
 
-    void update(K k);
+    void update();
 
 }
