@@ -1,17 +1,14 @@
 package service;
 
-import exception.InvalidName;
-import exception.InvalidNationalId;
-import exception.InvalidPassword;
+import service.exception.InvalidName;
+import service.exception.InvalidNationalId;
+import service.exception.InvalidPassword;
 
 import java.util.Scanner;
 
 public class Utility {
     private final Scanner input = new Scanner(System.in);
     private String fullName,nationalId,password;
-    private final InvalidName invalidName = new InvalidName();
-    private final InvalidNationalId invalidNationalId = new InvalidNationalId();
-    private final InvalidPassword invalidPassword = new InvalidPassword();
 
     public String setFullName(){
         while(true){
