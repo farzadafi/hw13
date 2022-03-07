@@ -15,9 +15,9 @@ import javax.persistence.Entity;
 public class Clerk extends UserAccount {
     private Integer salary;
 
-    public Clerk(Integer id, String fullName, String nationalId, String password) {
+    public Clerk(Integer id, String fullName, String nationalId, String password,Integer salary) {
         super(id, fullName, nationalId, password);
-        this.salary = 100000;
+        this.salary = salary;
     }
 
 }
