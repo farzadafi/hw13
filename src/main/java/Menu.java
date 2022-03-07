@@ -207,6 +207,7 @@ public class Menu {
                     break;
 
                 case 3:
+                    studentService.showMyLesson(user);
                     break;
 
                 case 4:
