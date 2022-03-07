@@ -1,10 +1,7 @@
 import entity.Student;
 import entity.UserAccount;
 import repository.GenericRepositoryImpel;
-import service.ClerkService;
-import service.LoginService;
-import service.ProfessorService;
-import service.StudentService;
+import service.*;
 
 import java.util.Scanner;
 
@@ -16,6 +13,7 @@ public class Menu {
     private final ProfessorService professorService = new ProfessorService();
     private final ClerkService clerkService = new ClerkService();
     private final LoginService loginService = new LoginService();
+    private final OfferLessonService offerLessonService = new OfferLessonService();
 
     public int mainMenu(){
         System.out.println("\n**********WELCOME**********");
@@ -144,8 +142,27 @@ public class Menu {
                     }
                     break;
 
+                case 4:
+                    System.out.println("\n1-Register unit.");
+                    System.out.println("2-Delete unit.");
+                    System.out.println("3-Edit unit.");
+                    System.out.print("Please slect a number:");
+                    command = input.nextInt();
+                    input.nextLine();
+                    switch (command) {
+                        case 1:
+                            offerLessonService.add();
+                            break;
 
+                        case 2:
+                            offerLessonService.delete();
+                            break;
 
+                        case 3:
+                            offerLessonService.update();
+                            break;
+                    }
+                    break;
 
             }//switch
         }//while
