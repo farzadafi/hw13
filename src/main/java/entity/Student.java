@@ -13,12 +13,7 @@ import java.util.Set;
 @DiscriminatorValue("Student")
 public class Student extends UserAccount {
 
-    @ManyToMany
-    @JoinTable(
-            name = "Student_Lessons",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "lesson_id")
-    )
+    @ManyToMany()
     private Set<Lesson> lessons;
 
     public Student(Integer id, String fullName, String nationalId, String password) {
