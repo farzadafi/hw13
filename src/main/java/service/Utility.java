@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class Utility {
     private final Scanner input = new Scanner(System.in);
     private String fullName,nationalId,password;
+    private LoginService loginService = new LoginService();
 
     public String setFullName(){
         while(true){
@@ -25,15 +26,20 @@ public class Utility {
     }
 
     public String setNationalId(){
-        while(true){
-            System.out.print("Enter National Id(just number):");
-            try {
-                nationalId = input.nextLine();
-                nationalIdChecker(nationalId);
-                break;
-            }catch (InvalidNationalId except){
-                System.out.println(except.getMessage());
+        while (true) {
+            while (true) {
+                System.out.print("Enter National Id(just number):");
+                try {
+                    nationalId = input.nextLine();
+                    nationalIdChecker(nationalId);
+                    break;
+                } catch (InvalidNationalId except) {
+                    System.out.println(except.getMessage());
+                }
             }
+            var result = loginService.findByUserName(nationalId);
+            if(result == null ) break;
+            else System.out.println("You enter a wrong nationalId!");
         }
         return nationalId;
     }
