@@ -1,6 +1,7 @@
 package service;
 
 import entity.Student;
+import entity.UserAccount;
 import repository.GenericRepositoryImpel;
 import repository.StudentRepository;
 
@@ -31,7 +32,7 @@ public class StudentService implements Service {
     public void delete() {
         System.out.print("Enter nationalId Student:");
         nationalId = input.nextLine();
-        Student student = (Student) loginService.findByUserName(nationalId);
+        UserAccount student =  loginService.findByUserName(nationalId);
         if(student != null && student.getDiscriminatorValue().equals("Student") ){
             genericRepositoryImpel.delete(student);
             System.out.println("This user successful deleted!");
@@ -45,7 +46,7 @@ public class StudentService implements Service {
     public void update() {
         System.out.print("Enter nationalId Student:");
         nationalId = input.nextLine();
-        Student student = (Student) loginService.findByUserName(nationalId);
+        UserAccount student =  loginService.findByUserName(nationalId);
         if(student == null ){
             System.out.println("You enter a wrong national Id!");
         }
