@@ -198,6 +198,7 @@ public class Menu {
             switch(command)
             {
                 case 1:
+                    studentService.showAllUnit();
                     break;
 
                 case 2:
