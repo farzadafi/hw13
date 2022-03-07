@@ -5,11 +5,9 @@ import entity.OfferLesson;
 import entity.Student;
 import entity.UserAccount;
 import repository.GenericRepositoryImpel;
+import repository.LessonRepository;
 
-import java.util.HashSet;
-import java.util.InputMismatchException;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class LessonService implements Service{
     private final Scanner input = new Scanner(System.in);
@@ -17,6 +15,7 @@ public class LessonService implements Service{
     private final StudentService studentService = new StudentService();
     private Integer lessonId,quarterNumber,year;
     private OfferLessonService offerLessonService = new OfferLessonService();
+    private final LessonRepository lessonRepository = new LessonRepository();
 
     @Override
     public void add() {
@@ -59,6 +58,15 @@ public class LessonService implements Service{
         Lesson lesson = new Lesson(null,students,lessonId,quarterNumber,year,-1);
         genericRepositoryImpel.add(lesson);
         System.out.println("This unit successful added!");
+    }
+
+    public List<Lesson> showMyLesson(int id){
+        try {
+            return lessonRepository.showMyLesson(id);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     private Integer giveInput(){
