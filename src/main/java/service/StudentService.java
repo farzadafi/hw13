@@ -4,10 +4,14 @@ import entity.Student;
 import repository.GenericRepositoryImpel;
 import repository.StudentRepository;
 
-public class StudentService implements Service<Student> {
+import java.util.Scanner;
+
+public class StudentService implements Service {
+    private Scanner input = new Scanner(System.in);
     private String fullName,nationalId,password;
     private final Utility utility = new Utility();
     private final StudentRepository studentRepository = new StudentRepository();
+    private final LoginService loginService = new LoginService();
     private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
 
     @Override
@@ -24,12 +28,21 @@ public class StudentService implements Service<Student> {
     }
 
     @Override
-    public void delete(Student student) {
+    public void delete() {
+        System.out.print("Enter nationalId Student:");
+        nationalId = input.nextLine();
+        Student student = (Student) loginService.findByUserName(nationalId);
+        if(student != null && student.getDiscriminatorValue().equals("Student") ){
+            genericRepositoryImpel.delete(student);
+            System.out.println("This user successful deleted!");
+        }
+        else
+            System.out.println("You enter a wrong national Id!");
 
     }
 
     @Override
-    public void update(Student student) {
+    public void update() {
 
     }
 }
