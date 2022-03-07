@@ -171,9 +171,17 @@ public class Menu {
                         clerkService.showSalary(user);
                     break;
 
-            }//switch
-        }//while
-    }//clerkMenu
+                case 6:
+                    System.out.println("Good Luck!");
+                    finalWhile = false;
+                    break;
+
+                default :
+                    System.out.println("You enter a wrong number!");
+
+            }
+        }
+    }
 
     public void studentMenu(UserAccount user){
         System.out.println("Student menu");
