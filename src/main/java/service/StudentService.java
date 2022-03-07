@@ -1,5 +1,6 @@
 package service;
 
+import entity.Lesson;
 import entity.OfferLesson;
 import entity.Student;
 import entity.UserAccount;
@@ -72,6 +73,17 @@ public class StudentService implements Service {
                 System.out.print(offer.CustomToString() +  "   Professor:");
                 System.out.println(offer.getProfessor().getFullName());
             }
+        }
+    }
+
+    public void showMyLesson(UserAccount account){
+        LessonService lessonService = new LessonService();
+        List<Lesson> lessons = lessonService.showMyLesson(account.getId());
+        for (Lesson a:lessons
+             ) {
+            OfferLesson offerLesson = offerLessonService.findById(a.getIdOfferLesson());
+            System.out.println("lessonName:" + offerLesson.getLessonName() + "   quarterNumber:" + a.getQuarterNumber()
+            + "   year:" + a.getYearEducation() + "   grade:" + a.getGrade());
         }
     }
 
