@@ -10,7 +10,10 @@ public class OfferLessonRepository implements Repository<OfferLesson> {
 
     @Override
     public OfferLesson findById(int id) {
-        return null;
+        try (var session = sessionFactory.openSession()) {
+            OfferLesson offerLesson = session.find(OfferLesson.class,id);
+            return offerLesson;
+        }
     }
 
     @Override

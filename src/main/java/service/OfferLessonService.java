@@ -118,4 +118,13 @@ public class OfferLessonService implements Service {
         }
         return offerLessonList;
     }
+
+    public OfferLesson findById(int id){
+        try {
+            return offerLessonRepository.findById(id);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 }
