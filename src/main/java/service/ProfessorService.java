@@ -1,12 +1,11 @@
 package service;
 
 import entity.Professor;
-import entity.Student;
 import entity.UserAccount;
 import entity.enomuration.KindProfessor;
 import repository.GenericRepositoryImpel;
+import repository.ProfessorRepository;
 
-import javax.swing.*;
 import java.util.Scanner;
 
 public class ProfessorService implements Service {
@@ -15,6 +14,7 @@ public class ProfessorService implements Service {
     private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
     private final Utility utility = new Utility();
     private final LoginService loginService = new LoginService();
+    private final ProfessorRepository professorRepository = new ProfessorRepository();
 
 
 
@@ -71,5 +71,13 @@ public class ProfessorService implements Service {
             genericRepositoryImpel.update(professor1);
             System.out.println(professor1.getFullName() + " successful updated!");
         }
+    }
+
+    public Professor findProfessor(String nationalId){
+        try {
+            return professorRepository.findProfessor(nationalId);
+        }catch (Exception e){
+        }
+        return null;
     }
 }
