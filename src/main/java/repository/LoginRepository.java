@@ -9,7 +9,7 @@ public class LoginRepository {
 
     public UserAccount findByUserName(String nationalId){
         try (var session = sessionFactory.openSession()) {
-            var query = session.createQuery("FROM Student as a WHERE a.nationalId = :nationalId",UserAccount.class);
+            var query = session.createQuery("FROM UserAccount as a WHERE a.nationalId = :nationalId",UserAccount.class);
             query.setParameter("nationalId",nationalId);
             var result =  query.getSingleResult();
             return result;
