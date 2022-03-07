@@ -1,10 +1,12 @@
 package service;
 
+import entity.OfferLesson;
 import entity.Student;
 import entity.UserAccount;
 import repository.GenericRepositoryImpel;
 import repository.StudentRepository;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class StudentService implements Service {
@@ -14,6 +16,7 @@ public class StudentService implements Service {
     private final StudentRepository studentRepository = new StudentRepository();
     private final LoginService loginService = new LoginService();
     private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
+    private final OfferLessonService offerLessonService = new OfferLessonService();
 
     @Override
     public void add() {
@@ -56,6 +59,19 @@ public class StudentService implements Service {
             Student student1 = new Student(student.getId(),fullName,student.getNationalId(),password);
             genericRepositoryImpel.update(student1);
             System.out.println(student1.getFullName() + " successful updated!");
+        }
+    }
+
+    public void showAllUnit(){
+        List<OfferLesson> offerLessonList = offerLessonService.findAll();
+        if(offerLessonList == null )
+            System.out.println("We dont have any Offer Lesson now!");
+        else{
+            for (OfferLesson offer:offerLessonList
+                 ) {
+                System.out.print(offer.CustomToString() +  "   Professor:");
+                System.out.println(offer.getProfessor().getFullName());
+            }
         }
     }
 
