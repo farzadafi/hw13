@@ -24,5 +24,11 @@ public class OfferLesson {
     @ManyToOne
     private Professor professor;
 
-
+    public String CustomToString() {
+        return "OfferLesson{" +
+                "id=" + id +
+                ", LessonName='" + LessonName + '\'' +
+                ", unitNumber=" + unitNumber +
+                '}';
+    }
 }
