@@ -43,6 +43,19 @@ public class StudentService implements Service {
 
     @Override
     public void update() {
-
+        System.out.print("Enter nationalId Student:");
+        nationalId = input.nextLine();
+        Student student = (Student) loginService.findByUserName(nationalId);
+        if(student == null ){
+            System.out.println("You enter a wrong national Id!");
+        }
+        else if(student != null && student.getDiscriminatorValue().equals("Student")){
+            fullName = utility.setFullName();
+            password = utility.setPassword();
+            Student student1 = new Student(student.getId(),fullName,student.getNationalId(),password);
+            genericRepositoryImpel.update(student1);
+            System.out.println(student1.getFullName() + " successful updated!");
+        }
     }
+
 }
