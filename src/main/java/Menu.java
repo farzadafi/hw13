@@ -164,6 +164,13 @@ public class Menu {
                     }
                     break;
 
+                case 5:
+                    if(user.getId() == 0 )
+                        System.out.println("Your salary is:100000" );
+                    else
+                        clerkService.showSalary(user);
+                    break;
+
             }//switch
         }//while
     }//clerkMenu
