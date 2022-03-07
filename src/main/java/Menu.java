@@ -184,7 +184,41 @@ public class Menu {
     }
 
     public void studentMenu(UserAccount user){
-        System.out.println("Student menu");
+        boolean finalWhile = true;
+        while(finalWhile)
+        {
+            System.out.println("\n****** Hi! " + user.getFullName() + " ******");
+            System.out.println("1-view mySelf.");
+            System.out.println("2-view lessonList.");
+            System.out.println("3-Unit select.");
+            System.out.println("4-view lesson and grade's.");
+            System.out.println("5-Exit.");
+            System.out.print("Please select a number:");
+            command = input.nextInt();
+            input.nextLine();
+            switch(command)
+            {
+                case 1:
+                    break;
+
+                case 2:
+                    break;
+
+                case 3:
+                    break;
+
+                case 4:
+                    break;
+
+                case 5:
+                    System.out.println("Good luck!");
+                    finalWhile = false;
+                    break;
+
+                default:
+                    System.out.println("you enter a wrong number!");
+            }
+        }
     }
 
     public void professorMenu(UserAccount user){
