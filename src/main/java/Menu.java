@@ -14,6 +14,7 @@ public class Menu {
     private final ClerkService clerkService = new ClerkService();
     private final LoginService loginService = new LoginService();
     private final OfferLessonService offerLessonService = new OfferLessonService();
+    private final LessonService lessonService = new LessonService();
 
     public int mainMenu(){
         System.out.println("\n**********WELCOME**********");
@@ -202,6 +203,7 @@ public class Menu {
                     break;
 
                 case 2:
+                    lessonService.add(user);
                     break;
 
                 case 3:
