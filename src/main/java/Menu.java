@@ -2,6 +2,7 @@ import entity.Student;
 import entity.UserAccount;
 import repository.GenericRepositoryImpel;
 import service.LoginService;
+import service.ProfessorService;
 import service.StudentService;
 
 import java.util.Scanner;
@@ -11,7 +12,7 @@ public class Menu {
     private int command;
     private String userName,password;
     private final StudentService studentService = new StudentService();
-    private final LoginService loginService = new LoginService();
+    private final ProfessorService professorService = new ProfessorService();
 
     public int mainMenu(){
         System.out.println("\n**********WELCOME**********");
@@ -79,6 +80,32 @@ public class Menu {
                             System.out.println("you enter a wrong number!");
                     }
                     break;
+
+                case 2:
+                    System.out.println("\n1-Register Professor.");
+                    System.out.println("2-Delete Professor.");
+                    System.out.println("3-Edit Professor.");
+                    System.out.print("Please select a number:");
+                    command = input.nextInt();
+                    input.nextLine();
+                    switch (command) {
+                        case 1:
+                            professorService.add();
+                            break;
+
+                        case 2:
+                            professorService.delete();
+                            break;
+
+                        case 3:
+                            professorService.update();
+                            break;
+
+                        default:
+                            System.out.println("You enter a wrong number!");
+                    }
+                    break;
+
 
 
             }//switch
