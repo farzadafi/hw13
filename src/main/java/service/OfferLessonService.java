@@ -6,6 +6,7 @@ import repository.GenericRepositoryImpel;
 import repository.OfferLessonRepository;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class OfferLessonService implements Service {
@@ -106,5 +107,15 @@ public class OfferLessonService implements Service {
         }catch (Exception e){
         }
         return null;
+    }
+
+    public List<OfferLesson> findAll(){
+        List<OfferLesson> offerLessonList = null;
+        try {
+            offerLessonList = offerLessonRepository.findAll();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return offerLessonList;
     }
 }
