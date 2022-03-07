@@ -3,6 +3,7 @@ package service;
 import entity.Clerk;
 import entity.Student;
 import entity.UserAccount;
+import repository.ClerkRepository;
 import repository.GenericRepositoryImpel;
 
 import java.util.Scanner;
@@ -14,6 +15,7 @@ public class ClerkService implements Service{
     private final Utility utility = new Utility();
     private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
     private final LoginService loginService = new LoginService();
+    private final ClerkRepository clerkRepository = new ClerkRepository();
 
 
     @Override
@@ -70,6 +72,11 @@ public class ClerkService implements Service{
             genericRepositoryImpel.update(clerk1);
             System.out.println(clerk1.getFullName() + " successful updated!");
         }
+    }
+
+    public void showSalary(UserAccount user){
+        Clerk clerk = clerkRepository.findById(user.getId());
+        System.out.println("Your salary is:" + clerk.getSalary());
     }
 
 }
