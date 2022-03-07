@@ -9,7 +9,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @DiscriminatorValue("Student")
 public class Student extends UserAccount {
