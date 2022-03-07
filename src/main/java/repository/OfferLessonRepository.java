@@ -1,7 +1,6 @@
 package repository;
 
 import entity.OfferLesson;
-import entity.Professor;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
@@ -16,7 +15,12 @@ public class OfferLessonRepository implements Repository<OfferLesson> {
 
     @Override
     public List<OfferLesson> findAll() {
-        return null;
+        try (var session = sessionFactory.openSession()) {
+            var query = session.createQuery("FROM OfferLesson ",OfferLesson.class);
+            List<OfferLesson> offerLessonList = query.list();
+            return offerLessonList;
+        }
+
     }
 
     public OfferLesson findLesson(String lessonName) {
