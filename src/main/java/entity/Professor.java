@@ -5,6 +5,8 @@ import lombok.*;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,6 +16,7 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("Professor")
 public class Professor extends UserAccount {
+    @Enumerated(EnumType.STRING)
     private KindProfessor kindProfessor;
 
     public Professor(Integer id, String fullName, String nationalId, String password, KindProfessor kindProfessor) {
