@@ -188,11 +188,10 @@ public class Menu {
         while(finalWhile)
         {
             System.out.println("\n****** Hi! " + user.getFullName() + " ******");
-            System.out.println("1-view mySelf.");
-            System.out.println("2-view lessonList.");
-            System.out.println("3-Unit select.");
-            System.out.println("4-view lesson and grade's.");
-            System.out.println("5-Exit.");
+            System.out.println("1-view Offer lesson List.");
+            System.out.println("2-Unit select.");
+            System.out.println("3-view lesson and grade's.");
+            System.out.println("4-Exit.");
             System.out.print("Please select a number:");
             command = input.nextInt();
             input.nextLine();
@@ -208,9 +207,6 @@ public class Menu {
                     break;
 
                 case 4:
-                    break;
-
-                case 5:
                     System.out.println("Good luck!");
                     finalWhile = false;
                     break;
