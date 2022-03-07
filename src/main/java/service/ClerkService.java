@@ -21,7 +21,7 @@ public class ClerkService implements Service{
         fullName = utility.setFullName();
         nationalId = utility.setNationalId();
         password = utility.setPassword();
-        System.out.println("Enter salary for " + fullName);
+        System.out.print("Enter salary for " + fullName);
         try {
             salary = input.nextInt();
         }catch (Exception e){
@@ -60,6 +60,7 @@ public class ClerkService implements Service{
         else if(clerk != null && clerk.getDiscriminatorValue().equals("Clerk")){
             fullName = utility.setFullName();
             password = utility.setPassword();
+            System.out.print("Enter salary for " + fullName);
             try {
                 salary = input.nextInt();
             }catch (Exception e){
