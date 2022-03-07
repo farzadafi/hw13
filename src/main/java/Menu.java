@@ -1,6 +1,7 @@
 import entity.Student;
 import entity.UserAccount;
 import repository.GenericRepositoryImpel;
+import service.ClerkService;
 import service.LoginService;
 import service.ProfessorService;
 import service.StudentService;
@@ -13,6 +14,7 @@ public class Menu {
     private String userName,password;
     private final StudentService studentService = new StudentService();
     private final ProfessorService professorService = new ProfessorService();
+    private final ClerkService clerkService = new ClerkService();
 
     public int mainMenu(){
         System.out.println("\n**********WELCOME**********");
@@ -105,6 +107,29 @@ public class Menu {
                             System.out.println("You enter a wrong number!");
                     }
                     break;
+
+                case 3:
+                    System.out.println("\n1-Register Clerk.");
+                    System.out.println("2-Delete Clerk.");
+                    System.out.println("3-Edit Clerk.");
+                    System.out.print("Please select a number:");
+                    command = input.nextInt();
+                    input.nextLine();
+                    switch (command) {
+                        case 1:
+                            clerkService.add();
+                            break;
+
+                        case 2:
+                            clerkService.delete();
+                            break;
+
+                        case 3:
+                            clerkService.update();
+                            break;
+                    }
+                    break;
+
 
 
 
