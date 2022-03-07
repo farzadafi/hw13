@@ -15,6 +15,7 @@ public class Menu {
     private final StudentService studentService = new StudentService();
     private final ProfessorService professorService = new ProfessorService();
     private final ClerkService clerkService = new ClerkService();
+    private final LoginService loginService = new LoginService();
 
     public int mainMenu(){
         System.out.println("\n**********WELCOME**********");
@@ -38,16 +39,29 @@ public class Menu {
         userName = input.nextLine();
         System.out.print("Please enter your password:");
         password = input.nextLine();
-        if( userName.equals("admin" ) && password.equals("admin"))
-            clerkMenu();
-        else
-            System.out.println("farzad");
+        if( userName.equals("admin" ) && password.equals("admin")) {
+            UserAccount user = new UserAccount(0,"admin","admin","admin");
+            clerkMenu(user);
+        }
+        else{
+            UserAccount user = loginService.findByUserName(userName);
+            if(user == null )
+                System.out.println("You enter a wrong username");
+            else if(user.getDiscriminatorValue().equals("Clerk") && user.getPassword().equals(password))
+                clerkMenu(user);
+            else if(user.getDiscriminatorValue().equals("Professor") && user.getPassword().equals(password))
+                professorMenu(user);
+            else if(user.getDiscriminatorValue().equals("Student") && user.getPassword().equals(password))
+                studentMenu(user);
+            else
+                System.out.println("You enter wrong password!");
+        }
     }
 
-    public void clerkMenu() {
+    public void clerkMenu(UserAccount user) {
         boolean finalWhile = true;
         while (finalWhile) {
-            System.out.println("\n****** Hi!******");
+            System.out.println("\n****** Hi " + user.getFullName() + "******");
             System.out.println("1-Student Tools.");
             System.out.println("2-Professor Tools.");
             System.out.println("3-Clerk Tools.");
@@ -137,12 +151,12 @@ public class Menu {
         }//while
     }//clerkMenu
 
-    public void studentMenu(){
-
+    public void studentMenu(UserAccount user){
+        System.out.println("Student menu");
     }
 
-    public void professorMenu(){
-
+    public void professorMenu(UserAccount user){
+        System.out.println("Professor Menu");
     }
 
 
