@@ -68,9 +68,11 @@ public class Menu {
                             break;
 
                         case 2:
+                            studentService.delete();
                             break;
 
                         case 3:
+                            studentService.update();
                             break;
 
                         default:
