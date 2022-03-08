@@ -239,6 +239,7 @@ public class Menu {
                     break;
 
                 case 2:
+                    professorService.clacSalary(user);
                     break;
 
                 case 3:
