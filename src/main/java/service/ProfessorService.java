@@ -140,4 +140,21 @@ public class ProfessorService implements Service {
         genericRepositoryImpel.update(lesson);
         System.out.println("Grade successful inserted!");
     }
+
+    public void clacSalary(UserAccount account){
+        OfferLessonService offerLessonService = new OfferLessonService();
+        LessonService lessonService = new LessonService();
+        List<Lesson> lessons = lessonService.showLessonForProfessor(account.getId());
+        Integer sum = 0;
+        for (Lesson less:lessons
+             ) {
+            OfferLesson offerLesson = offerLessonService.findById(less.getIdOfferLesson());
+            sum += offerLesson.getUnitNumber();
+        }
+        Professor professor = professorRepository.findById(account.getId());
+        if(professor.getKindProfessor().equals(KindProfessor.SCIENCE))
+            System.out.println("your salary is ::" + (1000 + (sum * 500)));
+        else
+            System.out.println("your salary is :" + (sum * 500));
+    }
 }
