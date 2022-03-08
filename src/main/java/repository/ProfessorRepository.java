@@ -1,5 +1,6 @@
 package repository;
 
+import entity.Clerk;
 import entity.Professor;
 import entity.UserAccount;
 import org.hibernate.SessionFactory;
@@ -12,7 +13,13 @@ public class ProfessorRepository implements Repository<Professor> {
 
     @Override
     public Professor findById(int id) {
-        return null;
+        try (var session = sessionFactory.openSession()) {
+            Professor professor = session.find(Professor.class,id);
+            if(professor == null )
+                return null;
+            else
+                return professor;
+        }
     }
 
     @Override
