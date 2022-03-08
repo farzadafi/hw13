@@ -24,7 +24,11 @@ public class ProfessorRepository implements Repository<Professor> {
 
     @Override
     public List<Professor> findAll() {
-        return null;
+        try (var session = sessionFactory.openSession()) {
+            var query = session.createQuery("FROM UserAccount ", Professor.class);
+            List<Professor> professorList = query.list();
+            return professorList;
+        }
     }
 
     public Professor findProfessor(String nationalId) {
