@@ -1,19 +1,16 @@
 package repository;
 
-import entity.Clerk;
 import entity.Professor;
-import entity.UserAccount;
-import org.hibernate.SessionFactory;
 
 import java.util.List;
 
 public class ProfessorRepository implements Repository<Professor> {
 
-    private SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
+    private final Connection connection = new Connection();
 
     @Override
     public Professor findById(int id) {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = connection.openCurrentSession()) {
             Professor professor = session.find(Professor.class,id);
             if(professor == null )
                 return null;
@@ -24,7 +21,7 @@ public class ProfessorRepository implements Repository<Professor> {
 
     @Override
     public List<Professor> findAll() {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = connection.openCurrentSession()) {
             var query = session.createQuery("FROM UserAccount ", Professor.class);
             List<Professor> professorList = query.list();
             return professorList;
@@ -32,7 +29,7 @@ public class ProfessorRepository implements Repository<Professor> {
     }
 
     public Professor findProfessor(String nationalId) {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = connection.openCurrentSession()) {
             var query = session.createQuery("FROM Professor as a WHERE a.nationalId = :nationalId", Professor.class);
             query.setParameter("nationalId", nationalId);
             var result = query.getSingleResult();

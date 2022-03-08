@@ -1,19 +1,17 @@
 package repository;
 
-import entity.Clerk;
 import entity.Lesson;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
 
 import java.util.List;
 
 public class LessonRepository implements Repository<Lesson> {
 
-    private final SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
+    private final Connection connection = new Connection();
 
     @Override
     public Lesson findById(int id) {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = connection.openCurrentSession()) {
             Lesson lesson = session.find(Lesson.class,id);
             if(lesson == null )
                 return null;
@@ -24,7 +22,7 @@ public class LessonRepository implements Repository<Lesson> {
 
     @Override
     public List<Lesson> findAll() {
-        try (var session = sessionFactory.openSession()) {
+        try (var session = connection.openCurrentSession()) {
             var query = session.createQuery("FROM Lesson ", Lesson.class);
             List<Lesson> lessonList = query.list();
             return lessonList;
@@ -32,7 +30,7 @@ public class LessonRepository implements Repository<Lesson> {
     }
 
     public List<Lesson> showMyLesson(int id){
-        try (var session = sessionFactory.openSession()) {
+        try (var session = connection.openCurrentSession()) {
             NativeQuery query = session.createSQLQuery("select * from lesson\n" +
                                                           "join student_lessons sl on lesson.id = sl.lesson_id" +
                                                            " where student_id = :id");
@@ -44,7 +42,7 @@ public class LessonRepository implements Repository<Lesson> {
     }
 
     public List<Lesson> showLessonForProfessor(int id){
-        try (var session = sessionFactory.openSession()) {
+        try (var session = connection.openCurrentSession()) {
             NativeQuery query = session.createSQLQuery("select * from lesson\n" +
                                                           "join offerlesson offer on idofferlesson = offer.id" +
                                                           " where professor_id = :id");
