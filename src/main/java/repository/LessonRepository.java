@@ -1,12 +1,9 @@
 package repository;
 
 import entity.Lesson;
-import entity.OfferLesson;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
-import service.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LessonRepository implements Repository<Lesson> {
@@ -33,6 +30,18 @@ public class LessonRepository implements Repository<Lesson> {
             List lessons = query.list();
             return lessons;
         }
-
     }
+
+    public List<Lesson> showLessonForProfessor(int id){
+        try (var session = sessionFactory.openSession()) {
+            NativeQuery query = session.createSQLQuery("select * from lesson\n" +
+                                                          "join offerlesson offer on idofferlesson = offer.id" +
+                                                          " where professor_id = :id");
+            query.addEntity(Lesson.class);
+            query.setParameter("id",id);
+            List lessons = query.list();
+            return lessons;
+        }
+    }
+
 }
