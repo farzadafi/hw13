@@ -18,7 +18,8 @@ public class ProfessorService implements Service {
     private final Utility utility = new Utility();
     private final LoginService loginService = new LoginService();
     private final ProfessorRepository professorRepository = new ProfessorRepository();
-
+    private static final OfferLessonService offerLessonService = new OfferLessonService();
+    private static final LessonService lessonService = new LessonService();
 
     @Override
     public void add() {
@@ -84,8 +85,6 @@ public class ProfessorService implements Service {
     }
 
     public void registerGrade(UserAccount account){
-        OfferLessonService offerLessonService = new OfferLessonService();
-        LessonService lessonService = new LessonService();
         List<Lesson> lessons = lessonService.showLessonForProfessor(account.getId());
         if(lessons == null ){
             System.out.println("You dont have any Lesson for register grade!");
@@ -142,8 +141,6 @@ public class ProfessorService implements Service {
     }
 
     public void clacSalary(UserAccount account){
-        OfferLessonService offerLessonService = new OfferLessonService();
-        LessonService lessonService = new LessonService();
         List<Lesson> lessons = lessonService.showLessonForProfessor(account.getId());
         Integer sum = 0;
         for (Lesson less:lessons
