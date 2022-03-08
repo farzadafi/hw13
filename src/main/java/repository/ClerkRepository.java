@@ -1,7 +1,6 @@
 package repository;
 
 import entity.Clerk;
-import entity.Professor;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
@@ -24,6 +23,10 @@ public class ClerkRepository implements Repository<Clerk> {
 
     @Override
     public List<Clerk> findAll() {
-        return null;
+        try (var session = sessionFactory.openSession()) {
+            var query = session.createQuery("FROM UserAccount ", Clerk.class);
+            List<Clerk> clerkList = query.list();
+            return clerkList;
+        }
     }
 }
