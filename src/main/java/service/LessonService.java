@@ -69,6 +69,15 @@ public class LessonService implements Service{
         }
     }
 
+    public List<Lesson> showLessonForProfessor(int id){
+        try {
+            return lessonRepository.showLessonForProfessor(id);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     private Integer giveInput(){
         Integer i;
         try {
