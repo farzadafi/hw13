@@ -140,7 +140,7 @@ public class ProfessorService implements Service {
         System.out.println("Grade successful inserted!");
     }
 
-    public void clacSalary(UserAccount account){
+    public void calcSalary(UserAccount account){
         List<Lesson> lessons = lessonService.showLessonForProfessor(account.getId());
         Integer sum = 0;
         for (Lesson less:lessons
