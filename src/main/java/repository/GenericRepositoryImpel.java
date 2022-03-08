@@ -1,18 +1,17 @@
 package repository;
 
-import org.hibernate.SessionFactory;
-
 public class GenericRepositoryImpel<K> {
 
-    private final SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
+    private final Connection connection = new Connection();
 
 
     public K add(K entity) {
-        try (var session = sessionFactory.openSession()){
-            var transaction = session.beginTransaction();
+        try (var session = connection.openCurrentSessionWithTransaction()){
+            var transaction = connection.getCurrentTransaction();
             try {
                 session.save(entity);
                 transaction.commit();
+                //connection.closeCurrentSessionWithTransaction();
                 return entity;
             } catch (Exception e) {
                 transaction.rollback();
@@ -23,8 +22,8 @@ public class GenericRepositoryImpel<K> {
     }
 
     public void update(K entity) {
-        try (var session = sessionFactory.openSession()) {
-            var transaction = session.beginTransaction();
+        try (var session = connection.openCurrentSessionWithTransaction()) {
+            var transaction = connection.getCurrentTransaction();
             try {
                 session.update(entity);
                 transaction.commit();
@@ -36,8 +35,8 @@ public class GenericRepositoryImpel<K> {
     }
 
     public void delete(K entity) {
-        try (var session = sessionFactory.openSession()) {
-            var transaction = session.beginTransaction();
+        try (var session = connection.openCurrentSessionWithTransaction()) {
+            var transaction = connection.getCurrentTransaction();
             try {
                 session.delete(entity);
                 transaction.commit();
