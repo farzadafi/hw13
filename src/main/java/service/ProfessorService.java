@@ -1,21 +1,23 @@
 package service;
 
-import entity.Professor;
-import entity.UserAccount;
+import entity.*;
 import entity.enomuration.KindProfessor;
 import repository.GenericRepositoryImpel;
 import repository.ProfessorRepository;
 
+import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class ProfessorService implements Service {
     private Scanner input = new Scanner(System.in);
+    private Integer idInput,grade;
     private String fullName,nationalId,password;
     private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
     private final Utility utility = new Utility();
     private final LoginService loginService = new LoginService();
     private final ProfessorRepository professorRepository = new ProfessorRepository();
-
 
 
     @Override
@@ -79,5 +81,63 @@ public class ProfessorService implements Service {
         }catch (Exception e){
         }
         return null;
+    }
+
+    public void registerGrade(UserAccount account){
+        OfferLessonService offerLessonService = new OfferLessonService();
+        LessonService lessonService = new LessonService();
+        List<Lesson> lessons = lessonService.showLessonForProfessor(account.getId());
+        if(lessons == null ){
+            System.out.println("You dont have any Lesson for register grade!");
+            return;
+        }
+        System.out.println("You have this Lesson:");
+        for (Lesson less:lessons
+             ) {
+            if(less.getGrade() == -1 ) {
+                Student student = less.getStudents().stream().iterator().next();
+                OfferLesson offerLesson = offerLessonService.findById(less.getIdOfferLesson());
+                System.out.println("\nid:" + less.getId()
+                        + "   FullName:" + student.getFullName()
+                        + "   nationalId:" + student.getNationalId()
+                        + "   LessonName:" + offerLesson.getLessonName());
+            }
+        }
+        System.out.print("Enter Id for register grade:");
+        try {
+            idInput = input.nextInt();
+            input.nextLine();
+        }catch (InputMismatchException e){
+            input.nextLine();
+            System.out.println("Just enter number!");
+            return;
+        }
+        System.out.print("Enter grade:");
+        try {
+            grade = input.nextInt();
+            input.nextLine();
+        }catch (InputMismatchException e){
+            input.nextLine();
+            System.out.println("Just enter number!");
+            return;
+        }
+        if(grade < 0 || grade > 20 ){
+            System.out.println("Grade a number between 0 and 20,Professor!");
+            return;
+        }
+        Lesson lesson = null;
+        for (Lesson less:lessons
+             ) {
+            if(less.getId() == idInput){
+                lesson = new Lesson(less.getId(),less.getStudents(),less.getIdOfferLesson(),less.getQuarterNumber(),less.getYearEducation(),grade);
+                break;
+            }
+        }
+        if(lesson == null){
+            System.out.println("Doesn't have this Id!");
+            return;
+        }
+        genericRepositoryImpel.update(lesson);
+        System.out.println("Grade successful inserted!");
     }
 }
