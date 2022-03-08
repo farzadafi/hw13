@@ -235,6 +235,7 @@ public class Menu {
             switch (command)
             {
                 case 1:
+                    professorService.registerGrade(user);
                     break;
 
                 case 2:
