@@ -16,9 +16,8 @@ public class StudentService implements Service {
     private final Utility utility = new Utility();
     private final StudentRepository studentRepository = new StudentRepository();
     private final LoginService loginService = new LoginService();
-    private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
+    private final GenericServiceImpel<UserAccount> genericServiceImpel = new GenericServiceImpel<>();
     private final OfferLessonService offerLessonService = new OfferLessonService();
-    private final GenericServiceImpel genericServiceImpel = new GenericServiceImpel();
 
     @Override
     public void add() {
@@ -39,7 +38,7 @@ public class StudentService implements Service {
         nationalId = input.nextLine();
         UserAccount student =  loginService.findByUserName(nationalId);
         if(student != null && student.getDiscriminatorValue().equals("Student") ){
-            genericRepositoryImpel.delete(student);
+            genericServiceImpel.delete(student);
             System.out.println("This user successful deleted!");
         }
         else
@@ -59,7 +58,7 @@ public class StudentService implements Service {
             fullName = utility.setFullName();
             password = utility.setPassword();
             Student student1 = new Student(student.getId(),fullName,student.getNationalId(),password);
-            genericRepositoryImpel.update(student1);
+            genericServiceImpel.update(student1);
             System.out.println(student1.getFullName() + " successful updated!");
         }
     }

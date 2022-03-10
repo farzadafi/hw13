@@ -2,19 +2,16 @@ package service;
 
 import entity.*;
 import entity.enomuration.KindProfessor;
-import repository.GenericRepositoryImpel;
 import repository.ProfessorRepository;
 
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
 public class ProfessorService implements Service {
     private Scanner input = new Scanner(System.in);
     private Integer idInput,grade;
     private String fullName,nationalId,password;
-    private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
     private final Utility utility = new Utility();
     private final LoginService loginService = new LoginService();
     private final ProfessorRepository professorRepository = new ProfessorRepository();
@@ -47,7 +44,7 @@ public class ProfessorService implements Service {
         nationalId = input.nextLine();
         UserAccount professor =  loginService.findByUserName(nationalId);
         if(professor != null && professor.getDiscriminatorValue().equals("Professor") ){
-            genericRepositoryImpel.delete(professor);
+            genericServiceImpel.delete(professor);
             System.out.println("This user successful deleted!");
         }
         else
@@ -72,7 +69,7 @@ public class ProfessorService implements Service {
                 professor1 = new Professor(professor.getId(),fullName,professor.getNationalId(),password,KindProfessor.SCIENCE);
             else
                 professor1 = new Professor(professor.getId(),fullName,professor.getNationalId(),password,KindProfessor.NORMAL);
-            genericRepositoryImpel.update(professor1);
+            genericServiceImpel.update(professor1);
             System.out.println(professor1.getFullName() + " successful updated!");
         }
     }
@@ -137,7 +134,7 @@ public class ProfessorService implements Service {
             System.out.println("Doesn't have this Id!");
             return;
         }
-        genericRepositoryImpel.update(lesson);
+        genericServiceImpel.update(lesson);
         System.out.println("Grade successful inserted!");
     }
 

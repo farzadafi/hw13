@@ -13,10 +13,9 @@ public class ClerkService implements Service{
     private Integer salary;
     private String fullName,nationalId,password;
     private final Utility utility = new Utility();
-    private final GenericServiceImpel genericServiceImpel= new GenericServiceImpel();
+    private final GenericServiceImpel<UserAccount> genericServiceImpel= new GenericServiceImpel<>();
     private final LoginService loginService = new LoginService();
     private final ClerkRepository clerkRepository = new ClerkRepository();
-    private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
 
 
     @Override
@@ -44,7 +43,7 @@ public class ClerkService implements Service{
         nationalId = input.nextLine();
         UserAccount clerk =  loginService.findByUserName(nationalId);
         if(clerk != null && clerk.getDiscriminatorValue().equals("Clerk") ){
-            genericRepositoryImpel.delete(clerk);
+            genericServiceImpel.delete(clerk);
             System.out.println("This user successful deleted!");
         }
         else
@@ -70,7 +69,7 @@ public class ClerkService implements Service{
                 System.out.println(e.getMessage());
             }
             Clerk clerk1 = new Clerk(clerk.getId(),fullName,clerk.getNationalId(),password,salary);
-            genericRepositoryImpel.update(clerk1);
+            genericServiceImpel.update(clerk1);
             System.out.println(clerk1.getFullName() + " successful updated!");
         }
     }
