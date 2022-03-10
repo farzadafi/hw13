@@ -6,12 +6,11 @@ import repository.SessionFactorySingleton;
 
 public class GenericServiceImpel<K> {
 
-    private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
-    private SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
+    private final GenericRepositoryImpel<K> genericRepositoryImpel = new GenericRepositoryImpel<K>();
+    private final SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
 
 
     public K add(K entity) {
-        sessionFactory.openSession();
         try (var session = sessionFactory.getCurrentSession()){
             var transaction = session.getTransaction();
             try {
@@ -21,8 +20,7 @@ public class GenericServiceImpel<K> {
                 return entity;
             } catch (Exception e) {
                 transaction.rollback();
-                e.getStackTrace();
-                System.out.println("Insert not successful!");
+                System.out.println(e.getMessage());
                 return null;
             }
         }
@@ -32,7 +30,8 @@ public class GenericServiceImpel<K> {
         try (var session = sessionFactory.getCurrentSession()) {
             var transaction = session.getTransaction();
             try {
-                session.update(entity);
+                transaction.begin();
+                genericRepositoryImpel.update(entity);
                 transaction.commit();
             } catch (Exception e) {
                 transaction.rollback();
@@ -45,7 +44,8 @@ public class GenericServiceImpel<K> {
         try (var session = sessionFactory.getCurrentSession()) {
             var transaction = session.getTransaction();
             try {
-                session.delete(entity);
+                transaction.begin();
+                genericRepositoryImpel.delete(entity);
                 transaction.commit();
             } catch (Exception e) {
                 transaction.rollback();
