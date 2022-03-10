@@ -9,11 +9,11 @@ import java.util.List;
 
 public class ClerkRepository implements Repository<Clerk> {
 
-    private final Connection connection = new Connection();
+    private SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
 
     @Override
     public Clerk findById(int id) {
-        try (var session = connection.openCurrentSession()) {
+        try (var session = sessionFactory.getCurrentSession()) {
             Clerk clerk = session.find(Clerk.class,id);
             if(clerk == null )
                 return null;
@@ -25,7 +25,7 @@ public class ClerkRepository implements Repository<Clerk> {
 
     @Override
     public List<Clerk> findAll() {
-        try (var session = connection.openCurrentSession()) {
+        try (var session = sessionFactory.getCurrentSession()) {
             var query = session.createQuery("FROM UserAccount ", UserAccount.class);
             List<UserAccount> userAccounts = query.list();
             List<Clerk> clerkList = new ArrayList<>();

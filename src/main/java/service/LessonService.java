@@ -16,6 +16,7 @@ public class LessonService implements Service{
     private Integer lessonId,quarterNumber,year;
     private OfferLessonService offerLessonService = new OfferLessonService();
     private final LessonRepository lessonRepository = new LessonRepository();
+    private final GenericServiceImpel genericServiceImpel = new GenericServiceImpel();
 
     @Override
     public void add() {
@@ -56,7 +57,7 @@ public class LessonService implements Service{
         if(year == null )
             return;
         Lesson lesson = new Lesson(null,students,lessonId,quarterNumber,year,-1);
-        genericRepositoryImpel.add(lesson);
+        genericServiceImpel.add(lesson);
         System.out.println("This unit successful added!");
     }
 

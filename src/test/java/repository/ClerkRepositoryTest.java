@@ -3,6 +3,7 @@ package repository;
 import entity.Clerk;
 import org.hibernate.Session;
 import org.junit.jupiter.api.*;
+import service.GenericServiceImpel;
 
 import java.util.List;
 
@@ -13,19 +14,16 @@ class ClerkRepositoryTest {
     private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
     private final ClerkRepository clerkRepository = new ClerkRepository();
     private Clerk clerk = new Clerk(null,"farzad","123456789","1!Aa ",3000);
-    private final Connection connection = new Connection();
     static Session session;
+    private GenericServiceImpel genericServiceImpel = new GenericServiceImpel();
 
     @BeforeAll
     public static void testConnection() {
-        Connection connection = new Connection();
-        session = connection.openCurrentSessionWithTransaction();
         System.out.println("SessionFactory connected");
     }
 
     @AfterAll
     public static void downConnection() {
-        Connection connection = new Connection();
         if (session != null) session.close();
         System.out.println("SessionFactory destroyed");
     }
@@ -43,7 +41,7 @@ class ClerkRepositoryTest {
 
     @Test
     public void testFindById(){
-        Clerk clerk1 = (Clerk) genericRepositoryImpel.add(clerk);
+        Clerk clerk1 = (Clerk) genericServiceImpel.add(clerk);
 
         Clerk clerk2 = clerkRepository.findById(clerk1.getId());
 
@@ -69,13 +67,11 @@ class ClerkRepositoryTest {
 
     @BeforeEach
     public void openSession() {
-        session = connection.openCurrentSession();
         System.out.println("Session created");
     }
 
     @AfterEach
     public void closeSession() {
-        if (session != null) connection.closeCurrentSession();
         System.out.println("Session closed\n");
     }
 

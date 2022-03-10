@@ -20,6 +20,7 @@ public class ProfessorService implements Service {
     private final ProfessorRepository professorRepository = new ProfessorRepository();
     private static final OfferLessonService offerLessonService = new OfferLessonService();
     private static final LessonService lessonService = new LessonService();
+    private final GenericServiceImpel genericServiceImpel = new GenericServiceImpel();
 
     @Override
     public void add() {
@@ -33,7 +34,7 @@ public class ProfessorService implements Service {
             professor = new Professor(null,fullName,nationalId,password,KindProfessor.SCIENCE);
         else
             professor = new Professor(null,fullName,nationalId,password,KindProfessor.NORMAL);
-        Professor professor1 = (Professor) genericRepositoryImpel.add(professor);
+        Professor professor1 = (Professor) genericServiceImpel.add(professor);
         if(professor1 == null )
             System.out.println("Something is wrong");
         else

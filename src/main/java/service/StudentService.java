@@ -18,6 +18,7 @@ public class StudentService implements Service {
     private final LoginService loginService = new LoginService();
     private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
     private final OfferLessonService offerLessonService = new OfferLessonService();
+    private final GenericServiceImpel genericServiceImpel = new GenericServiceImpel();
 
     @Override
     public void add() {
@@ -25,7 +26,7 @@ public class StudentService implements Service {
         nationalId = utility.setNationalId();
         password = utility.setPassword();
         Student student = new Student(null,fullName,nationalId,password);
-        Student student1 = (Student) genericRepositoryImpel.add(student);
+        Student student1 = (Student) genericServiceImpel.add(student);
         if(student1 == null )
             System.out.println("Something is wrong");
         else

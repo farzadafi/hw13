@@ -8,8 +8,10 @@ public class LoginService {
 
     public UserAccount findByUserName(String userName){
         try {
+            System.out.println("try");
             return loginRepository.findByUserName(userName);
         }catch (Exception e){
+            System.out.println("catch");
         }
         return null;
     }

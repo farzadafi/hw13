@@ -10,20 +10,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class GenericRepositoryImpelTest {
     private Clerk clerk = new Clerk(1,"farzad","123456789","1!Aa ",3000);
     private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
-    private final Connection connection = new Connection();
     static Session session;
     private final ClerkRepository clerkRepository = new ClerkRepository();
 
     @BeforeAll
     public static void testConnection() {
-        Connection connection = new Connection();
-        session = connection.openCurrentSessionWithTransaction();
         System.out.println("SessionFactory connected");
     }
 
     @AfterAll
     public static void downConnection() {
-        Connection connection = new Connection();
         if (session != null) session.close();
         System.out.println("SessionFactory destroyed");
     }
@@ -74,13 +70,11 @@ class GenericRepositoryImpelTest {
 
     @BeforeEach
     public void openSession() {
-        session = connection.openCurrentSession();
         System.out.println("Session created");
     }
 
     @AfterEach
     public void closeSession() {
-        if (session != null) connection.closeCurrentSession();
         System.out.println("Session closed\n");
     }
 

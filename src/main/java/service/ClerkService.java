@@ -13,9 +13,10 @@ public class ClerkService implements Service{
     private Integer salary;
     private String fullName,nationalId,password;
     private final Utility utility = new Utility();
-    private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
+    private final GenericServiceImpel genericServiceImpel= new GenericServiceImpel();
     private final LoginService loginService = new LoginService();
     private final ClerkRepository clerkRepository = new ClerkRepository();
+    private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
 
 
     @Override
@@ -30,7 +31,7 @@ public class ClerkService implements Service{
             System.out.println(e.getMessage());
         }
         Clerk clerk = new Clerk(null,fullName,nationalId,password,salary);
-        Clerk clerk1 = (Clerk) genericRepositoryImpel.add(clerk);
+        Clerk clerk1 = (Clerk) genericServiceImpel.add(clerk);
         if(clerk1 == null )
             System.out.println("Something is wrong");
         else

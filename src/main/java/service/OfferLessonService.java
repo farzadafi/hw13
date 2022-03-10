@@ -16,6 +16,7 @@ public class OfferLessonService implements Service {
     private final ProfessorService professorService = new ProfessorService();
     private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
     private final OfferLessonRepository offerLessonRepository = new OfferLessonRepository();
+    private final GenericServiceImpel genericServiceImpel = new GenericServiceImpel();
 
 
 
@@ -45,7 +46,7 @@ public class OfferLessonService implements Service {
             return;
         }
         OfferLesson offerLesson = new OfferLesson(null,lessonName,unitNumber,professor);
-        OfferLesson offerLesson1 = (OfferLesson) genericRepositoryImpel.add(offerLesson);
+        OfferLesson offerLesson1 = (OfferLesson) genericServiceImpel.add(offerLesson);
         if(offerLesson1 == null )
             System.out.println("Something is wrong");
         else
