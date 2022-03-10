@@ -1,5 +1,6 @@
 package repository;
 
+import entity.Clerk;
 import entity.Lesson;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
@@ -12,13 +13,9 @@ public class LessonRepository implements Repository<Lesson> {
 
     @Override
     public Lesson findById(int id) {
-        try (var session = sessionFactory.getCurrentSession()) {
-            Lesson lesson = session.find(Lesson.class,id);
-            if(lesson == null )
-                return null;
-            else
-                return lesson;
-        }
+        var session = sessionFactory.getCurrentSession();
+        Lesson lesson = session.find(Lesson.class,id);
+        return lesson;
     }
 
     @Override

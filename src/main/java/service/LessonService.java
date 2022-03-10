@@ -1,11 +1,10 @@
 package service;
 
-import entity.Lesson;
-import entity.OfferLesson;
-import entity.Student;
-import entity.UserAccount;
+import entity.*;
+import org.hibernate.SessionFactory;
 import repository.GenericRepositoryImpel;
 import repository.LessonRepository;
+import repository.SessionFactorySingleton;
 
 import java.util.*;
 
@@ -17,6 +16,7 @@ public class LessonService implements Service{
     private OfferLessonService offerLessonService = new OfferLessonService();
     private final LessonRepository lessonRepository = new LessonRepository();
     private final GenericServiceImpel genericServiceImpel = new GenericServiceImpel();
+    private final SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
 
     @Override
     public void add() {
@@ -90,5 +90,16 @@ public class LessonService implements Service{
             return null;
         }
         return i;
+    }
+
+    public Lesson findById(int id){
+        try (var session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            Lesson lesson = lessonRepository.findById(id);
+            if(lesson == null )
+                return null;
+            else
+                return lesson;
+        }
     }
 }
