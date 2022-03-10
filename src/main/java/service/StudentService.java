@@ -4,7 +4,8 @@ import entity.Lesson;
 import entity.OfferLesson;
 import entity.Student;
 import entity.UserAccount;
-import repository.GenericRepositoryImpel;
+import org.hibernate.SessionFactory;
+import repository.SessionFactorySingleton;
 import repository.StudentRepository;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class StudentService implements Service {
     private final LoginService loginService = new LoginService();
     private final GenericServiceImpel<UserAccount> genericServiceImpel = new GenericServiceImpel<>();
     private final OfferLessonService offerLessonService = new OfferLessonService();
+    private final SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
 
     @Override
     public void add() {
@@ -84,6 +86,18 @@ public class StudentService implements Service {
             OfferLesson offerLesson = offerLessonService.findById(a.getIdOfferLesson());
             System.out.println("lessonName:" + offerLesson.getLessonName() + "   quarterNumber:" + a.getQuarterNumber()
             + "   year:" + a.getYearEducation() + "   grade:" + a.getGrade());
+        }
+    }
+
+    public Student findById(int id) {
+        try (var session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            try {
+                return studentRepository.findById(id);
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+                return null;
+            }
         }
     }
 

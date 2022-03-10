@@ -22,10 +22,6 @@ public class StudentRepository implements Repository<Student> {
 
     @Override
     public List<Student> findAll() {
-        try (var session = sessionFactory.getCurrentSession()) {
-            var query = session.createQuery("FROM UserAccount ", Student.class);
-            List<Student> studentList = query.list();
-            return studentList;
-        }
+        return null;
     }
 }

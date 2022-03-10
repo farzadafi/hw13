@@ -20,35 +20,31 @@ public class LessonRepository implements Repository<Lesson> {
 
     @Override
     public List<Lesson> findAll() {
-        try (var session = sessionFactory.getCurrentSession()) {
+        var session = sessionFactory.getCurrentSession();
             var query = session.createQuery("FROM Lesson ", Lesson.class);
             List<Lesson> lessonList = query.list();
             return lessonList;
-        }
     }
 
     public List<Lesson> showMyLesson(int id){
-        try (var session = sessionFactory.getCurrentSession()) {
-            NativeQuery query = session.createSQLQuery("select * from lesson\n" +
+        var session = sessionFactory.getCurrentSession();
+        NativeQuery query = session.createSQLQuery("select * from lesson\n" +
                                                           "join student_lessons sl on lesson.id = sl.lesson_id" +
                                                            " where student_id = :id");
-            query.addEntity(Lesson.class);
-            query.setParameter("id",id);
-            List lessons = query.list();
-            return lessons;
-        }
+        query.addEntity(Lesson.class);
+        query.setParameter("id",id);
+        List lessons = query.list();
+        return lessons;
     }
 
     public List<Lesson> showLessonForProfessor(int id){
-        try (var session = sessionFactory.getCurrentSession()) {
-            NativeQuery query = session.createSQLQuery("select * from lesson\n" +
+        var session = sessionFactory.getCurrentSession();
+        NativeQuery query = session.createSQLQuery("select * from lesson\n" +
                                                           "join offerlesson offer on idofferlesson = offer.id" +
                                                           " where professor_id = :id");
-            query.addEntity(Lesson.class);
-            query.setParameter("id",id);
-            List lessons = query.list();
-            return lessons;
+        query.addEntity(Lesson.class);
+        query.setParameter("id",id);
+        List lessons = query.list();
+        return lessons;
         }
-    }
-
 }

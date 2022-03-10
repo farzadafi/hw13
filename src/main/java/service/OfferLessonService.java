@@ -2,8 +2,10 @@ package service;
 
 import entity.OfferLesson;
 import entity.Professor;
+import org.hibernate.SessionFactory;
 import repository.GenericRepositoryImpel;
 import repository.OfferLessonRepository;
+import repository.SessionFactorySingleton;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -17,6 +19,7 @@ public class OfferLessonService implements Service {
     private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
     private final OfferLessonRepository offerLessonRepository = new OfferLessonRepository();
     private final GenericServiceImpel genericServiceImpel = new GenericServiceImpel();
+    private final SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
 
 
 
@@ -102,30 +105,39 @@ public class OfferLessonService implements Service {
         }
     }
 
-    public OfferLesson findLesson(String lessonName){
-        try {
-            return offerLessonRepository.findLesson(lessonName);
-        }catch (Exception e){
+    public OfferLesson findLesson(String lessonName) {
+        try (var session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            try {
+                return offerLessonRepository.findLesson(lessonName);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return null;
+            }
         }
-        return null;
     }
 
-    public List<OfferLesson> findAll(){
-        List<OfferLesson> offerLessonList = null;
-        try {
-            offerLessonList = offerLessonRepository.findAll();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+    public List<OfferLesson> findAll() {
+        try (var session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            try {
+                return offerLessonRepository.findAll();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return null;
+            }
         }
-        return offerLessonList;
     }
 
-    public OfferLesson findById(int id){
-        try {
-            return offerLessonRepository.findById(id);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+    public OfferLesson findById(int id) {
+        try (var session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            try {
+                return offerLessonRepository.findById(id);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return null;
+            }
         }
-        return null;
     }
 }

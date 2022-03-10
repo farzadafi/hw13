@@ -11,28 +11,24 @@ public class OfferLessonRepository implements Repository<OfferLesson> {
 
     @Override
     public OfferLesson findById(int id) {
-        try (var session = sessionFactory.getCurrentSession()) {
-            OfferLesson offerLesson = session.find(OfferLesson.class,id);
-            return offerLesson;
-        }
+        var session = sessionFactory.getCurrentSession();
+        OfferLesson offerLesson = session.find(OfferLesson.class,id);
+        return offerLesson;
     }
 
     @Override
     public List<OfferLesson> findAll() {
-        try (var session = sessionFactory.getCurrentSession()) {
-            var query = session.createQuery("FROM OfferLesson ",OfferLesson.class);
-            List<OfferLesson> offerLessonList = query.list();
-            return offerLessonList;
-        }
-
+        var session = sessionFactory.getCurrentSession();
+        var query = session.createQuery("FROM OfferLesson ",OfferLesson.class);
+        List<OfferLesson> offerLessonList = query.list();
+        return offerLessonList;
     }
 
     public OfferLesson findLesson(String lessonName) {
-        try (var session = sessionFactory.getCurrentSession()) {
-            var query = session.createQuery("FROM OfferLesson as a WHERE a.LessonName = :LessonName", OfferLesson.class);
-            query.setParameter("LessonName", lessonName);
-            var result = query.getSingleResult();
-            return result;
-        }
+        var session = sessionFactory.getCurrentSession();
+        var query = session.createQuery("FROM OfferLesson as a WHERE a.LessonName = :LessonName", OfferLesson.class);
+        query.setParameter("LessonName", lessonName);
+        var result = query.getSingleResult();
+        return result;
     }
 }

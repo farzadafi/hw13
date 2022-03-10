@@ -2,7 +2,9 @@ package service;
 
 import entity.*;
 import entity.enomuration.KindProfessor;
+import org.hibernate.SessionFactory;
 import repository.ProfessorRepository;
+import repository.SessionFactorySingleton;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -18,6 +20,7 @@ public class ProfessorService implements Service {
     private static final OfferLessonService offerLessonService = new OfferLessonService();
     private static final LessonService lessonService = new LessonService();
     private final GenericServiceImpel genericServiceImpel = new GenericServiceImpel();
+    private final SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
 
     @Override
     public void add() {
@@ -74,12 +77,27 @@ public class ProfessorService implements Service {
         }
     }
 
-    public Professor findProfessor(String nationalId){
-        try {
-            return professorRepository.findProfessor(nationalId);
-        }catch (Exception e){
+    public Professor findProfessor(String nationalId) {
+        try (var session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            try {
+                return professorRepository.findProfessor(nationalId);
+            } catch (Exception e) {
+            }
+            return null;
         }
-        return null;
+    }
+
+    public Professor findById(int id) {
+        try (var session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            try {
+                return professorRepository.findById(id);
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+                return null;
+            }
+        }
     }
 
     public void registerGrade(UserAccount account){
@@ -146,7 +164,7 @@ public class ProfessorService implements Service {
             OfferLesson offerLesson = offerLessonService.findById(less.getIdOfferLesson());
             sum += offerLesson.getUnitNumber();
         }
-        Professor professor = professorRepository.findById(account.getId());
+        Professor professor = findById(account.getId());
         if(professor.getKindProfessor().equals(KindProfessor.SCIENCE))
             System.out.println("your salary is ::" + (1000 + (sum * 500)));
         else

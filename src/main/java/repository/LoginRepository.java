@@ -9,13 +9,10 @@ public class LoginRepository {
     private final SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
 
     public UserAccount findByUserName(String nationalId){
-        try (var session = sessionFactory.openSession()) {
-            var query = session.createQuery("FROM UserAccount as a WHERE a.nationalId = :nationalId",UserAccount.class);
-            query.setParameter("nationalId",nationalId);
-            var result =  query.getSingleResult();
-            return result;
-        }
-
+        var session = sessionFactory.getCurrentSession();
+        var query = session.createQuery("FROM UserAccount as a WHERE a.nationalId = :nationalId",UserAccount.class);
+        query.setParameter("nationalId",nationalId);
+        var result =  query.getSingleResult();
+        return result;
     }
-
 }

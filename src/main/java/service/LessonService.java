@@ -2,15 +2,13 @@ package service;
 
 import entity.*;
 import org.hibernate.SessionFactory;
-import repository.GenericRepositoryImpel;
 import repository.LessonRepository;
 import repository.SessionFactorySingleton;
 
 import java.util.*;
 
-public class LessonService implements Service{
+public class LessonService {
     private final Scanner input = new Scanner(System.in);
-    private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
     private final StudentService studentService = new StudentService();
     private Integer lessonId,quarterNumber,year;
     private OfferLessonService offerLessonService = new OfferLessonService();
@@ -18,20 +16,6 @@ public class LessonService implements Service{
     private final GenericServiceImpel genericServiceImpel = new GenericServiceImpel();
     private final SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
 
-    @Override
-    public void add() {
-
-    }
-
-    @Override
-    public void delete() {
-
-    }
-
-    @Override
-    public void update() {
-
-    }
 
     public void add(UserAccount user){
         Student student = (Student) user;
@@ -61,24 +45,6 @@ public class LessonService implements Service{
         System.out.println("This unit successful added!");
     }
 
-    public List<Lesson> showMyLesson(int id){
-        try {
-            return lessonRepository.showMyLesson(id);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
-    public List<Lesson> showLessonForProfessor(int id){
-        try {
-            return lessonRepository.showLessonForProfessor(id);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
     private Integer giveInput(){
         Integer i;
         try {
@@ -95,11 +61,48 @@ public class LessonService implements Service{
     public Lesson findById(int id){
         try (var session = sessionFactory.getCurrentSession()) {
             session.getTransaction().begin();
-            Lesson lesson = lessonRepository.findById(id);
-            if(lesson == null )
+            try {
+                return lessonRepository.findById(id);
+            }catch (Exception e){
+                System.out.println(e.getMessage());
                 return null;
-            else
-                return lesson;
+            }
+        }
+    }
+
+    public List<Lesson> findAll(){
+        try (var session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            try {
+                return lessonRepository.findAll();
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+                return null;
+            }
+        }
+    }
+
+    public List<Lesson> showMyLesson(int id){
+        try (var session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            try {
+                return lessonRepository.showMyLesson(id);
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+                return null;
+            }
+        }
+    }
+
+    public List<Lesson> showLessonForProfessor(int id) {
+        try (var session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            try {
+                return lessonRepository.showLessonForProfessor(id);
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+                return null;
+            }
         }
     }
 }
