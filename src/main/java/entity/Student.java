@@ -13,7 +13,7 @@ import java.util.Set;
 @DiscriminatorValue("Student")
 public class Student extends UserAccount {
 
-    @ManyToMany()
+    @ManyToMany(mappedBy = "students")
     private Set<Lesson> lessons;
 
     public Student(Integer id, String fullName, String nationalId, String password) {
