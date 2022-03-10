@@ -1,10 +1,10 @@
 package service;
 
 import entity.Clerk;
-import entity.Student;
 import entity.UserAccount;
+import org.hibernate.SessionFactory;
 import repository.ClerkRepository;
-import repository.GenericRepositoryImpel;
+import repository.SessionFactorySingleton;
 
 import java.util.Scanner;
 
@@ -16,6 +16,7 @@ public class ClerkService implements Service{
     private final GenericServiceImpel<UserAccount> genericServiceImpel= new GenericServiceImpel<>();
     private final LoginService loginService = new LoginService();
     private final ClerkRepository clerkRepository = new ClerkRepository();
+    private final SessionFactory sessionFactory = SessionFactorySingleton.getInstance();
 
 
     @Override
@@ -75,8 +76,19 @@ public class ClerkService implements Service{
     }
 
     public void showSalary(UserAccount user){
-        Clerk clerk = clerkRepository.findById(user.getId());
+        Clerk clerk = findById(user.getId());
         System.out.println("Your salary is:" + clerk.getSalary());
+    }
+
+    public Clerk findById(int id){
+        try (var session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            Clerk clerk = clerkRepository.findById(id);
+            if(clerk == null )
+                return null;
+            else
+                return clerk;
+        }
     }
 
 }

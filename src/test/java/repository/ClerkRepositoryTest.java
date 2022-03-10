@@ -49,22 +49,6 @@ class ClerkRepositoryTest {
         assertEquals(clerk1.getId(),clerk2.getId());
     }
 
-    @Test
-    public void testFindAll(){
-        Clerk clerk1 = new Clerk(null,"farzad","12345678","1!Aa ",3000);
-        Clerk clerk2 = new Clerk(null,"farzad","1234567","1!Aa ",3000);
-        genericRepositoryImpel.add(clerk1);
-        genericRepositoryImpel.add(clerk2);
-
-        List<Clerk> clerkList = clerkRepository.findAll();
-        genericRepositoryImpel.delete(clerk1);
-        genericRepositoryImpel.delete(clerk2);
-
-        if(clerkList.size() < 2 )
-            fail();
-    }
-
-
     @BeforeEach
     public void openSession() {
         System.out.println("Session created");
