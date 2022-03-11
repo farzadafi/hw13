@@ -3,12 +3,13 @@ import entity.UserAccount;
 import repository.GenericRepositoryImpel;
 import service.*;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
     private Scanner input = new Scanner(System.in);
     private int command;
-    private String userName,password;
+    private String userName, password;
     private final StudentService studentService = new StudentService();
     private final ProfessorService professorService = new ProfessorService();
     private final ClerkService clerkService = new ClerkService();
@@ -16,13 +17,13 @@ public class Menu {
     private final OfferLessonService offerLessonService = new OfferLessonService();
     private final LessonService lessonService = new LessonService();
 
-    public int mainMenu(){
+    public int mainMenu() {
         System.out.println("\n**********WELCOME**********");
         System.out.println("1-Enter.");
         System.out.println("2-Exit.");
         System.out.print("Please enter your command:");
-        command = input.nextInt();
-        switch(command) {
+        command = giveInput();
+        switch (command) {
             case 1:
                 return 1;
             case 2:
@@ -32,25 +33,23 @@ public class Menu {
         }
     }
 
-    public void publicLogin(){
-        input.nextLine();
+    public void publicLogin() {
         System.out.print("Please enter your username:");
         userName = input.nextLine();
         System.out.print("Please enter your password:");
         password = input.nextLine();
-        if( userName.equals("admin" ) && password.equals("admin")) {
-            UserAccount user = new UserAccount(0,"admin","admin","admin");
+        if (userName.equals("admin") && password.equals("admin")) {
+            UserAccount user = new UserAccount(0, "admin", "admin", "admin");
             clerkMenu(user);
-        }
-        else{
+        } else {
             UserAccount user = loginService.findByUserName(userName);
-            if(user == null )
+            if (user == null)
                 System.out.println("You enter a wrong username");
-            else if(user.getDiscriminatorValue().equals("Clerk") && user.getPassword().equals(password))
+            else if (user.getDiscriminatorValue().equals("Clerk") && user.getPassword().equals(password))
                 clerkMenu(user);
-            else if(user.getDiscriminatorValue().equals("Professor") && user.getPassword().equals(password))
+            else if (user.getDiscriminatorValue().equals("Professor") && user.getPassword().equals(password))
                 professorMenu(user);
-            else if(user.getDiscriminatorValue().equals("Student") && user.getPassword().equals(password))
+            else if (user.getDiscriminatorValue().equals("Student") && user.getPassword().equals(password))
                 studentMenu(user);
             else
                 System.out.println("You enter wrong password!");
@@ -68,16 +67,14 @@ public class Menu {
             System.out.println("5-View Salary bill.");
             System.out.println("6-Exit.");
             System.out.print("Please select:");
-            command = input.nextInt();
-            input.nextLine();
+            command = giveInput();
             switch (command) {
                 case 1:
                     System.out.println("\n1-Register Student.");
                     System.out.println("2-Delete Student.");
                     System.out.println("3-Edit Student.");
                     System.out.print("Please select a number:");
-                    command = input.nextInt();
-                    input.nextLine();
+                    command = giveInput();
                     switch (command) {
                         case 1:
                             studentService.add();
@@ -101,8 +98,7 @@ public class Menu {
                     System.out.println("2-Delete Professor.");
                     System.out.println("3-Edit Professor.");
                     System.out.print("Please select a number:");
-                    command = input.nextInt();
-                    input.nextLine();
+                    command = giveInput();
                     switch (command) {
                         case 1:
                             professorService.add();
@@ -126,8 +122,7 @@ public class Menu {
                     System.out.println("2-Delete Clerk.");
                     System.out.println("3-Edit Clerk.");
                     System.out.print("Please select a number:");
-                    command = input.nextInt();
-                    input.nextLine();
+                    command = giveInput();
                     switch (command) {
                         case 1:
                             clerkService.add();
@@ -148,8 +143,7 @@ public class Menu {
                     System.out.println("2-Delete unit.");
                     System.out.println("3-Edit unit.");
                     System.out.print("Please slect a number:");
-                    command = input.nextInt();
-                    input.nextLine();
+                    command = giveInput();
                     switch (command) {
                         case 1:
                             offerLessonService.add();
@@ -166,8 +160,8 @@ public class Menu {
                     break;
 
                 case 5:
-                    if(user.getId() == 0 )
-                        System.out.println("Your salary is:100000" );
+                    if (user.getId() == 0)
+                        System.out.println("Your salary is:100000");
                     else
                         clerkService.showSalary(user);
                     break;
@@ -177,27 +171,24 @@ public class Menu {
                     finalWhile = false;
                     break;
 
-                default :
+                default:
                     System.out.println("You enter a wrong number!");
 
             }
         }
     }
 
-    public void studentMenu(UserAccount user){
+    public void studentMenu(UserAccount user) {
         boolean finalWhile = true;
-        while(finalWhile)
-        {
+        while (finalWhile) {
             System.out.println("\n****** Hi! " + user.getFullName() + " ******");
             System.out.println("1-view Offer lesson List.");
             System.out.println("2-Unit select.");
             System.out.println("3-view lesson and grade's.");
             System.out.println("4-Exit.");
             System.out.print("Please select a number:");
-            command = input.nextInt();
-            input.nextLine();
-            switch(command)
-            {
+            command = giveInput();
+            switch (command) {
                 case 1:
                     studentService.showAllUnit();
                     break;
@@ -221,19 +212,16 @@ public class Menu {
         }
     }
 
-    public void professorMenu(UserAccount user){
+    public void professorMenu(UserAccount user) {
         boolean falseWhile = true;
-        while(falseWhile)
-        {
+        while (falseWhile) {
             System.out.println("\n****** Hi! " + user.getFullName() + " ******");
             System.out.println("1-Register grad's Student.");
             System.out.println("2-view salary bill.");
             System.out.println("3-Exit.");
             System.out.print("please select a number:");
-            command = input.nextInt();
-            input.nextLine();
-            switch (command)
-            {
+            command = giveInput();
+            switch (command) {
                 case 1:
                     professorService.registerGrade(user);
                     break;
@@ -249,6 +237,20 @@ public class Menu {
 
                 default:
                     System.out.println("you enter a wrong number");
+            }
+        }
+    }
+
+    private Integer giveInput() {
+        Integer i;
+        while (true) {
+            try {
+                i = input.nextInt();
+                input.nextLine();
+                return i;
+            } catch (InputMismatchException e) {
+                input.nextLine();
+                System.out.println("Just enter number please!");
             }
         }
     }
