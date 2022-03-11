@@ -1,20 +1,21 @@
-package repository;
+package service;
 
 import entity.Clerk;
 import org.hibernate.Session;
 import org.junit.jupiter.api.*;
-
+import repository.SessionFactorySingleton;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GenericRepositoryImpelTest {
+class GenericServiceImpelTest<K> {
     private Clerk clerk = new Clerk(1,"farzad","123456789","1!Aa ",3000);
-    private final GenericRepositoryImpel genericRepositoryImpel = new GenericRepositoryImpel();
+    private final GenericServiceImpel genericServiceImpel = new GenericServiceImpel();
     static Session session;
-    private final ClerkRepository clerkRepository = new ClerkRepository();
+    private final ClerkService clerkService = new ClerkService();
 
     @BeforeAll
     public static void testConnection() {
+        session = SessionFactorySingleton.getInstance().openSession();
         System.out.println("SessionFactory connected");
     }
 
@@ -26,7 +27,7 @@ class GenericRepositoryImpelTest {
 
     @AfterEach
     public void cleanUp() {
-        genericRepositoryImpel.delete(clerk);
+        genericServiceImpel.delete(clerk);
     }
 
 
@@ -37,9 +38,9 @@ class GenericRepositoryImpelTest {
 
     @Test
     public void testadd(){
-        genericRepositoryImpel.add(clerk);
+        genericServiceImpel.add(clerk);
 
-        Clerk clerk1 = clerkRepository.findById(clerk.getId());
+        Clerk clerk1 = clerkService.findById(clerk.getId());
         assertAll(
                 () -> assertNotEquals(0,clerk1.getId()),
                 () -> assertNotNull(clerk1),
@@ -49,21 +50,21 @@ class GenericRepositoryImpelTest {
 
     @Test
     public void testUpdate(){
-        genericRepositoryImpel.add(clerk);
+        genericServiceImpel.add(clerk);
         Clerk clerk1 = new Clerk(clerk.getId(),"farhad",clerk.getNationalId(),clerk.getPassword(),1000);
 
-        genericRepositoryImpel.update(clerk1);
-        Clerk clerk2 = clerkRepository.findById(clerk1.getId());
+        genericServiceImpel.update(clerk1);
+        Clerk clerk2 = clerkService.findById(clerk1.getId());
 
         assertEquals("farhad",clerk2.getFullName());
     }
 
     @Test
     public void testDelete(){
-        genericRepositoryImpel.add(clerk);
+        genericServiceImpel.add(clerk);
 
-        genericRepositoryImpel.delete(clerk);
-        Clerk clerk1 = clerkRepository.findById(clerk.getId());
+        genericServiceImpel.delete(clerk);
+        Clerk clerk1 = clerkService.findById(clerk.getId());
 
         assertNull(clerk1);
     }
