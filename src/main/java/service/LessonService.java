@@ -47,15 +47,16 @@ public class LessonService {
 
     private Integer giveInput(){
         Integer i;
-        try {
-           i = input.nextInt();
-           input.nextLine();
-        }catch (InputMismatchException e){
-            input.nextLine();
-            System.out.println("Just enter number please!");
-            return null;
+        while (true) {
+            try {
+                i = input.nextInt();
+                input.nextLine();
+                return i;
+            } catch (InputMismatchException e) {
+                input.nextLine();
+                System.out.println("Just enter number please!");
+            }
         }
-        return i;
     }
 
     public Lesson findById(int id){
